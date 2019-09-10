@@ -39,24 +39,15 @@ export default class Payment extends Component<PaymentProps, PaymentStates>  {
             )
         ]
 
+        let amount = new CommonPaymentCurrencyAmount(
+            Currencies.USD,
+            this.state.amount.toString()
+        )
+
         let details = new PaymentDetails(
             "test-id",
-            new CommonPaymentItem(
-                new CommonPaymentCurrencyAmount(
-                    Currencies.USD,
-                    this.state.amount.toString()
-                ),
-                this.TOTAL_LABEL_TEXT
-            ),
-            [
-                new CommonPaymentItem(
-                    new CommonPaymentCurrencyAmount(
-                        Currencies.USD,
-                        this.state.amount.toString()
-                    ),
-                    this.ORDER_LABEL_TEXT
-                )
-            ]
+            new CommonPaymentItem(amount, this.TOTAL_LABEL_TEXT),
+            [new CommonPaymentItem(amount, this.ORDER_LABEL_TEXT)]
         )
 
         let payreq = new PaymentRequest(paymentMethods, details)
