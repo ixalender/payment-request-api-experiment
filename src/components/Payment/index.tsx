@@ -1,4 +1,4 @@
-import React, {Component, ChangeEvent} from 'react';
+import React, {Component} from 'react';
 import {
     CommonPaymentMethodData,
     PaymentMethodDataDetails
@@ -12,6 +12,8 @@ interface PaymentStates {
 }
 
 export default class Payment extends Component<PaymentProps, PaymentStates>  {
+    private TOTAL_LABEL_TEXT = "Total"
+    private ORDER_LABEL_TEXT = "Something"
     
     constructor(props: PaymentProps) {
         super(props);
@@ -41,25 +43,27 @@ export default class Payment extends Component<PaymentProps, PaymentStates>  {
             "test-id",
             new CommonPaymentItem(
                 new CommonPaymentCurrencyAmount("USD", this.state.amount.toString()),
-                "total label text"
+                this.TOTAL_LABEL_TEXT
             ),
             [
                 new CommonPaymentItem(
                     new CommonPaymentCurrencyAmount("USD", this.state.amount.toString()),
-                    "details label text"
+                    this.ORDER_LABEL_TEXT
                 )
             ]
         )
 
         let payreq = new PaymentRequest(paymentMethods, details)
-
-        payreq.show().then(resp => {
-            console.log(resp)
-            setTimeout(() => {
-                resp.complete("success")
-            }, 1000)
-        }).catch((reason: DOMException) => {
-            console.log(reason)
+        
+        payreq.canMakePayment().then(result => {
+            if (result) {
+                payreq.show().then(resp => {
+                    resp.complete("success")
+                    console.log("success")
+                }).catch((reason: DOMException) => {
+                    console.log(reason)
+                })
+            }
         })
     }
 
