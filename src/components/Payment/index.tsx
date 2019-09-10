@@ -3,7 +3,7 @@ import {
     CommonPaymentMethodData,
     PaymentMethodDataDetails
 } from '../../models/CommonPaymentMethodData';
-import { Networks, CardTypes, PaymentMethods } from "../../models/Enums";
+import { Networks, CardTypes, PaymentMethods, Currencies } from "../../models/Enums";
 import { PaymentDetails, CommonPaymentItem, CommonPaymentCurrencyAmount } from '../../models/PaymentDetails';
 
 interface PaymentProps {}
@@ -42,12 +42,18 @@ export default class Payment extends Component<PaymentProps, PaymentStates>  {
         let details = new PaymentDetails(
             "test-id",
             new CommonPaymentItem(
-                new CommonPaymentCurrencyAmount("USD", this.state.amount.toString()),
+                new CommonPaymentCurrencyAmount(
+                    Currencies.USD,
+                    this.state.amount.toString()
+                ),
                 this.TOTAL_LABEL_TEXT
             ),
             [
                 new CommonPaymentItem(
-                    new CommonPaymentCurrencyAmount("USD", this.state.amount.toString()),
+                    new CommonPaymentCurrencyAmount(
+                        Currencies.USD,
+                        this.state.amount.toString()
+                    ),
                     this.ORDER_LABEL_TEXT
                 )
             ]

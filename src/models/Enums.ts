@@ -17,3 +17,7 @@ export enum PaymentMethods {
     APPLE_PAY = "https://apple.com/apple-pay",
     GOOGLE_PAY = "https://google.com/pay"
 }
+export enum Currencies {
+    USD = "USD",
+    RUB = "RUB"
+}
